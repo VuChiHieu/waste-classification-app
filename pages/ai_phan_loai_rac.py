@@ -5,7 +5,7 @@ from src.predict import predict_image, WASTE_INFO
 from src.icons import icon_title
 from src.ui import render_waste_card
 
-st.title("🔍 AI phân loại rác")
+st.title("♻️AI phân loại rác")
 st.write(
     "Tải lên ảnh rác thải để hệ thống phân loại tự động, đồng thời xem cách xử lý "
     "và nên bỏ vào nhóm rác nào cho phù hợp."
