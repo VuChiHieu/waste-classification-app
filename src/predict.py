@@ -22,7 +22,7 @@ output = Dense(6, activation='softmax')(x)
 model = Model(inputs=base_model.input, outputs=output)
 
 # Load weights đã lưu (thay vì load cả model) -> tránh lỗi tương thích version Keras
-model.load_weights("models/model_deploy_final.weights.h5")
+model.load_weights("models/model_deploy_v2_finetuned_combined.weights.h5")
 
 class_names = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
 # ⚠️ KHÔNG đổi thứ tự / nội dung class_names ở trên — nó phải khớp 100% với thứ tự
