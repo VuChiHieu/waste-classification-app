@@ -1,5 +1,5 @@
 import streamlit as st
-
+from src.ui import render_footer
 from src.predict import GROUP_INFO, WASTE_INFO, LABELS_VI, class_names
 from src.ui import render_group_card
 
@@ -23,3 +23,5 @@ for class_key in class_names:
     info = WASTE_INFO[class_key]
     group = GROUP_INFO[info["group"]]
     st.markdown(f"- **{LABELS_VI[class_key]}** → {group['name']}")
+    
+render_footer()

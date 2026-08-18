@@ -1,3 +1,4 @@
+import random
 import tensorflow as tf
 import numpy as np
 from PIL import Image
@@ -138,20 +139,52 @@ WASTE_INFO = {
     },
 }
 
+# ============================================================
+# THÔNG ĐIỆP MÔI TRƯỜNG (eco note) — hiển thị sau khi có kết quả
+# dự đoán, nhắc nhở nhẹ nhàng về cách xử lý rác đúng cách.
+# Mỗi class có thể có nhiều câu, hệ thống sẽ chọn ngẫu nhiên
+# để đỡ nhàm khi người dùng dùng app nhiều lần.
+# ============================================================
+ECO_TIPS = {
+    'cardboard': [
+        "Mỗi tấn giấy/carton tái chế giúp giữ lại khoảng 17 cây xanh. Gỡ băng keo trước khi bỏ vào thùng tái chế nhé.",
+        "Carton sạch, khô ráo tái chế rất tốt — nhưng dính dầu mỡ (như hộp pizza) thì nên bỏ vào rác thường.",
+    ],
+    'glass': [
+        "Thủy tinh có thể tái chế vô hạn lần mà không giảm chất lượng. Rửa sạch trước khi bỏ vào thùng tái chế nhé.",
+        "Một chai thủy tinh tái chế đúng cách có thể \"tái sinh\" thành sản phẩm mới thay vì nằm hàng trăm năm ở bãi rác.",
+    ],
+    'metal': [
+        "Kim loại là vật liệu có giá trị tái chế cao nhất trong rác sinh hoạt. Súc rửa sơ trước khi bỏ vào thùng tái chế nhé.",
+        "Một lon nhôm tái chế có thể quay lại kệ hàng chỉ trong khoảng 60 ngày.",
+    ],
+    'paper': [
+        "Giấy có thể tái chế được nhưng chỉ giới hạn vài lần — hãy dùng tiết kiệm và tái chế đúng nơi.",
+        "Giấy sạch tái chế tốt, nhưng giấy dính dầu mỡ hoặc giấy ăn đã dùng thì nên bỏ vào rác thường.",
+    ],
+    'plastic': [
+        "Rửa sạch và ép dẹp chai nhựa trước khi bỏ vào thùng tái chế sẽ giúp quá trình xử lý hiệu quả hơn nhiều.",
+        "Hạn chế đồ nhựa dùng một lần (ống hút, túi nilon mỏng) là cách giảm rác nhựa hiệu quả nhất, ngay từ đầu.",
+    ],
+    'trash': [
+        "Loại rác này khó tái chế — nhưng bạn vừa làm đúng một việc quan trọng: phân loại nó đúng chỗ.",
+        "Nếu đây là rác thực phẩm, hãy cân nhắc tách riêng làm rác hữu cơ để ủ phân thay vì chôn lấp.",
+    ],
+}
+
+FOOTER_QUOTE = "Mỗi lần phân loại đúng là một hành động nhỏ cho hành tinh lớn 🌱"
 
 def predict_image(uploaded_file):
-    # .convert("RGB") xử lý được mọi định dạng PIL đọc ra (kể cả ảnh có kênh alpha như PNG/WEBP,
-    # hoặc ảnh grayscale) -> luôn ép về đúng 3 kênh màu mà model cần, tránh lỗi shape
     img = Image.open(uploaded_file).convert("RGB").resize((224, 224))
     img_array = np.expand_dims(np.array(img) / 255.0, axis=0)
-    pred = model.predict(img_array)[0]  # mảng xác suất của cả 6 class
+    pred = model.predict(img_array)[0]
 
     idx = int(np.argmax(pred))
     label_en = class_names[idx]
     label_vi = LABELS_VI[label_en]
     confidence = float(pred[idx]) * 100
+    eco_tip = random.choice(ECO_TIPS[label_en])  # <-- thêm dòng này
 
-    # Top-3 xác suất cao nhất, dùng để hiển thị biểu đồ trên giao diện
     top3_idx = np.argsort(pred)[::-1][:3]
     top3 = [
         {
@@ -162,4 +195,4 @@ def predict_image(uploaded_file):
         for i in top3_idx
     ]
 
-    return label_en, label_vi, confidence, top3
+    return label_en, label_vi, confidence, top3, eco_tip

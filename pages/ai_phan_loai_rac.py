@@ -3,7 +3,7 @@ import pandas as pd
 
 from src.predict import predict_image, WASTE_INFO
 from src.icons import icon_title
-from src.ui import render_waste_card
+from src.ui import render_waste_card, render_eco_note, render_footer
 
 st.title("♻️AI phân loại rác")
 st.write(
@@ -19,7 +19,11 @@ uploaded_file = st.file_uploader(
 if uploaded_file:
     try:
         with st.spinner("Đang phân loại..."):
-            label_en, label_vi, confidence, top3 = predict_image(uploaded_file)
+            label_en, label_vi, confidence, top3, eco_tip = predict_image(uploaded_file)
+
+        # Đếm số lần phân loại trong phiên làm việc (gamification nhẹ)
+        st.session_state.setdefault("classify_count", 0)
+        st.session_state["classify_count"] += 1
 
         col_img, col_result = st.columns([1, 1.2], gap="large")
 
@@ -47,6 +51,10 @@ if uploaded_file:
                     "Hãy thử chụp ảnh rõ nét hơn, sát vật thể hơn."
                 )
 
+        # Eco note ngay dưới kết quả, trước khi vào phần thông tin chi tiết
+        render_eco_note(label_en, eco_tip)
+        st.caption(f"🌍 Đây là lần phân loại thứ **{st.session_state['classify_count']}** của bạn trong phiên này.")
+
         st.divider()
         st.subheader("Thông tin & cách xử lý")
         render_waste_card(label_en)
@@ -59,3 +67,5 @@ else:
         "Muốn tìm hiểu trước? Xem trang **📦 6 loại rác AI nhận diện** hoặc "
         "**🗂️ Nhóm rác thải** ở sidebar bên trái."
     )
+
+render_footer()

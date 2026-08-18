@@ -51,3 +51,53 @@ def render_group_card(group_key: str):
         """,
         unsafe_allow_html=True,
     )
+    
+def render_eco_note(class_key: str, eco_tip: str):
+    """Thẻ thông điệp môi trường nhỏ, hiển thị ngay sau kết quả dự đoán.
+    Dùng tông xanh lá/dương pastel cố định (không theo màu riêng của từng loại rác)
+    để người dùng nhận diện nhất quán đây là 'thông điệp môi trường'."""
+    st.markdown(
+        f"""
+        <div class="eco-note">
+            <span style="opacity:0.9;">🌱</span>
+            <span>{eco_tip}</span>
+        </div>
+        <style>
+        .eco-note {{
+            animation: ecoFadeIn 0.5s ease-out;
+            background: rgba(46, 139, 87, 0.08);
+            border-left: 3px solid #2E8B57;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin: 12px 0;
+            font-size: 0.9em;
+            font-style: italic;
+            opacity: 0.95;
+            transition: background 0.25s ease;
+        }}
+        .eco-note:hover {{
+            background: rgba(46, 139, 87, 0.13);
+        }}
+        @keyframes ecoFadeIn {{
+            from {{ opacity: 0; transform: translateY(4px); }}
+            to {{ opacity: 0.95; transform: translateY(0); }}
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_footer():
+    """Câu quote môi trường cố định, hiển thị cuối mọi trang để tạo cảm giác thương hiệu nhất quán."""
+    from src.predict import FOOTER_QUOTE
+
+    st.markdown(
+        f"""
+        <div style="text-align:center; opacity:0.55; font-size:0.85em;
+                    margin-top:36px; padding-top:14px; border-top:1px solid rgba(0,0,0,0.08);">
+            {FOOTER_QUOTE}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
