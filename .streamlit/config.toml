@@ -1,0 +1,15 @@
+[theme]
+# Màu chủ đạo — dùng cho button, slider, progress bar, link, checkbox...
+primaryColor = "#2E8B57"
+
+# Nền chính của app
+backgroundColor = "#FFFFFF"
+
+# Nền của sidebar và các khối phụ (card, expander...)
+secondaryBackgroundColor = "#F1F8F4"
+
+# Màu chữ chính
+textColor = "#1F2A24"
+
+# Font chữ — "sans serif" cho cảm giác hiện đại, sạch sẽ
+font = "sans serif"

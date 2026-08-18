@@ -11,7 +11,7 @@ from src.icons import icon_html, icon_title
 
 def render_waste_card(class_key: str):
     """Hiển thị thẻ thông tin chi tiết 1 loại rác: mô tả, ví dụ, cách xử lý, nên bỏ vào nhóm nào."""
-    from src.predict import LABELS_VI  # import cục bộ để tránh vòng lặp import nếu module mở rộng sau này
+    from src.predict import LABELS_VI
 
     info = WASTE_INFO[class_key]
     group = GROUP_INFO[info["group"]]
@@ -21,7 +21,11 @@ def render_waste_card(class_key: str):
     badge_text = "Có thể tái chế" if info["recyclable"] else "Khó / không tái chế"
 
     st.markdown(
-        icon_title(info["icon_lucide"], f" {label} ({class_key})", size=26, tag="h4"),
+        f"""
+        <div style="border-top:4px solid {info['color']}; padding:16px 18px 4px;
+                    border-radius:6px; background:rgba(0,0,0,0.015); margin-bottom:8px;">
+            {icon_title(info["icon_lucide"], f" {label} ({class_key})", size=26, tag="h4")}
+        """,
         unsafe_allow_html=True,
     )
     st.markdown(icon_html(badge_icon, size=16) + f"<i>{badge_text}</i>", unsafe_allow_html=True)
@@ -35,6 +39,7 @@ def render_waste_card(class_key: str):
         + f"<div style='font-size:0.85em; opacity:0.8; margin-top:2px;'>{group['bin_note']}</div>",
         unsafe_allow_html=True,
     )
+    st.markdown("</div>", unsafe_allow_html=True) 
 
 
 def render_group_card(group_key: str):
