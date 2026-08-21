@@ -1,15 +1,23 @@
 import streamlit as st
 import pandas as pd
 
-from src.predict import predict_image, WASTE_INFO
+from src.predict import predict_image, WASTE_INFO, MODEL_INFO
 from src.icons import icon_title
-from src.ui import render_waste_card, render_eco_note, render_footer
+from src.ui import render_waste_card, render_eco_note, render_footer, render_disclaimer
 
 st.title("♻️AI phân loại rác")
 st.write(
     "Tải lên ảnh rác thải để hệ thống phân loại tự động, đồng thời xem cách xử lý "
     "và nên bỏ vào nhóm rác nào cho phù hợp."
 )
+
+with st.expander("ℹ Về hệ thống này"):
+    st.markdown(f"**Kiến trúc model:** {MODEL_INFO['architecture']}")
+    st.markdown(f"**Độ chính xác:** {MODEL_INFO['accuracy']}")
+    st.markdown(f"**Số loại rác nhận diện được:** {MODEL_INFO['classes']}")
+    st.markdown("**Giới hạn cần lưu ý:**")
+    for lim in MODEL_INFO["limitations"]:
+        st.markdown(f"- {lim}")
 
 uploaded_file = st.file_uploader(
     "Chọn ảnh rác thải cần phân loại",
@@ -21,7 +29,6 @@ if uploaded_file:
         with st.spinner("Đang phân loại..."):
             label_en, label_vi, confidence, top3, eco_tip = predict_image(uploaded_file)
 
-        # Đếm số lần phân loại trong phiên làm việc (gamification nhẹ)
         st.session_state.setdefault("classify_count", 0)
         st.session_state["classify_count"] += 1
 
@@ -51,9 +58,9 @@ if uploaded_file:
                     "Hãy thử chụp ảnh rõ nét hơn, sát vật thể hơn."
                 )
 
-        # Eco note ngay dưới kết quả, trước khi vào phần thông tin chi tiết
         render_eco_note(label_en, eco_tip)
         st.caption(f"🌍 Đây là lần phân loại thứ **{st.session_state['classify_count']}** của bạn trong phiên này.")
+        render_disclaimer()
 
         st.divider()
         st.subheader("Thông tin & cách xử lý")

@@ -147,16 +147,16 @@ WASTE_INFO = {
 # ============================================================
 ECO_TIPS = {
     'cardboard': [
-        "Mỗi tấn giấy/carton tái chế giúp giữ lại khoảng 17 cây xanh. Gỡ băng keo trước khi bỏ vào thùng tái chế nhé.",
+        "Giấy/carton tái chế đúng cách giúp giảm đáng kể lượng cây phải khai thác mới. Gỡ băng keo trước khi bỏ vào thùng tái chế nhé.",
         "Carton sạch, khô ráo tái chế rất tốt — nhưng dính dầu mỡ (như hộp pizza) thì nên bỏ vào rác thường.",
     ],
     'glass': [
-        "Thủy tinh có thể tái chế vô hạn lần mà không giảm chất lượng. Rửa sạch trước khi bỏ vào thùng tái chế nhé.",
+        "Thủy tinh có thể tái chế nhiều lần mà gần như không giảm chất lượng. Rửa sạch trước khi bỏ vào thùng tái chế nhé.",
         "Một chai thủy tinh tái chế đúng cách có thể \"tái sinh\" thành sản phẩm mới thay vì nằm hàng trăm năm ở bãi rác.",
     ],
     'metal': [
-        "Kim loại là vật liệu có giá trị tái chế cao nhất trong rác sinh hoạt. Súc rửa sơ trước khi bỏ vào thùng tái chế nhé.",
-        "Một lon nhôm tái chế có thể quay lại kệ hàng chỉ trong khoảng 60 ngày.",
+        "Kim loại là một trong những vật liệu có giá trị tái chế cao nhất trong rác sinh hoạt. Súc rửa sơ trước khi bỏ vào thùng tái chế nhé.",
+        "Lon nhôm tái chế có thể quay lại kệ hàng dưới dạng sản phẩm mới trong một thời gian tương đối ngắn.",
     ],
     'paper': [
         "Giấy có thể tái chế được nhưng chỉ giới hạn vài lần — hãy dùng tiết kiệm và tái chế đúng nơi.",
@@ -173,6 +173,48 @@ ECO_TIPS = {
 }
 
 FOOTER_QUOTE = "Mỗi lần phân loại đúng là một hành động nhỏ cho hành tinh lớn 🌱"
+
+# ============================================================
+# RÁC NGUY HẠI — KHÔNG nằm trong 6 class model nhận diện được,
+# nhưng là nội dung giáo dục quan trọng: pin, rác điện tử, hóa
+# chất... không được bỏ chung rác sinh hoạt/tái chế thông thường.
+# ============================================================
+HAZARDOUS_INFO = {
+    'name': 'Rác nguy hại (pin, rác điện tử, hóa chất...)',
+    'icon': 'alert-triangle',
+    'color': '#D9822B',
+    'description': (
+        'Pin, ắc quy, bóng đèn huỳnh quang, thiết bị điện tử hỏng, hóa chất, thuốc hết hạn... '
+        'chứa các chất có thể gây hại cho môi trường và sức khỏe nếu xử lý sai cách.'
+    ),
+    'warning': (
+        'KHÔNG bỏ chung với rác sinh hoạt hay rác tái chế thông thường, kể cả khi trông giống '
+        'kim loại/nhựa. Nên mang đến điểm thu gom rác nguy hại/rác điện tử riêng (một số siêu thị '
+        'điện máy, điểm thu gom tại địa phương có tiếp nhận).'
+    ),
+}
+
+# ============================================================
+# THÔNG TIN VỀ MODEL — dùng cho mục "Về hệ thống này" ở trang chính,
+# giúp minh bạch về khả năng và giới hạn của AI.
+# ============================================================
+MODEL_INFO = {
+    'architecture': 'MobileNetV2 (Transfer Learning, pretrained trên ImageNet)',
+    'accuracy': '91% trên tập test (971 ảnh)',
+    'classes': 6,
+    'limitations': [
+        'Model chỉ nhận diện 6 loại: bìa carton, thủy tinh, kim loại, giấy, nhựa, và "rác thải khác" '
+        '— KHÔNG bao gồm rác hữu cơ, rác điện tử, pin, hóa chất.',
+        'Độ chính xác có thể giảm khi ảnh mờ, thiếu sáng, hoặc có nhiều vật thể lẫn nhau trong khung hình.',
+        'Kết quả mang tính tham khảo, không thay thế hướng dẫn phân loại rác chính thức tại địa phương bạn.',
+    ],
+}
+
+SOURCES_NOTE = (
+    "Nội dung giáo dục (mô tả, mẹo xử lý, phân nhóm rác) được tổng hợp và biên soạn lại từ các "
+    "nguồn phổ biến về phân loại rác tại nguồn, mang tính tham khảo chung — quy định cụ thể có "
+    "thể khác nhau tùy địa phương và đơn vị thu gom."
+)
 
 def predict_image(uploaded_file):
     img = Image.open(uploaded_file).convert("RGB").resize((224, 224))

@@ -106,3 +106,36 @@ def render_footer():
         """,
         unsafe_allow_html=True,
     )
+
+def render_disclaimer():
+    """Dòng ghi chú nhỏ nhắc kết quả AI chỉ mang tính tham khảo, không thay thế quy định địa phương."""
+    st.caption(
+        "⚠️ Kết quả từ AI mang tính tham khảo, không thay thế hướng dẫn phân loại rác chính thức "
+        "tại địa phương bạn. Với rác nguy hại (pin, rác điện tử, hóa chất...), vui lòng xử lý riêng, "
+        "không bỏ chung rác sinh hoạt."
+    )
+
+
+def render_hazard_note():
+    """Thẻ cảnh báo về rác nguy hại — nội dung giáo dục nằm ngoài 6 class model nhận diện được."""
+    from src.predict import HAZARDOUS_INFO
+
+    h = HAZARDOUS_INFO
+    st.markdown(
+        f"""
+        <div style="border-left:4px solid {h['color']}; background:rgba(217,130,43,0.08);
+                    padding:14px 16px; border-radius:6px; margin:10px 0;">
+            {icon_title(h['icon'], " <b>" + h['name'] + "</b>", size=22)}
+            <p style="margin-top:8px; margin-bottom:6px;">{h['description']}</p>
+            <p style="font-size:0.9em; margin:0;"><b>⚠️ {h['warning']}</b></p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_sources_note():
+    """Ghi chú nguồn tham khảo cho nội dung giáo dục — tăng tính minh bạch."""
+    from src.predict import SOURCES_NOTE
+
+    st.caption(f"📚 {SOURCES_NOTE}")

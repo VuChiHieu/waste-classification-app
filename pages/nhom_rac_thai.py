@@ -1,7 +1,8 @@
 import streamlit as st
-from src.ui import render_footer
+import pandas as pd
+
 from src.predict import GROUP_INFO, WASTE_INFO, LABELS_VI, class_names
-from src.ui import render_group_card
+from src.ui import render_group_card, render_hazard_note, render_sources_note, render_footer
 
 st.title("🗂️ Nhóm rác thải — thông tin thêm")
 st.write(
@@ -18,10 +19,20 @@ for col, group_key in zip(cols, GROUP_INFO.keys()):
         render_group_card(group_key)
 
 st.divider()
+st.subheader("⚠️ Lưu ý: rác nguy hại")
+render_hazard_note()
+
+st.divider()
 st.subheader("6 loại rác AI nhận diện thuộc nhóm nào?")
-for class_key in class_names:
-    info = WASTE_INFO[class_key]
-    group = GROUP_INFO[info["group"]]
-    st.markdown(f"- **{LABELS_VI[class_key]}** → {group['name']}")
-    
+df = pd.DataFrame([
+    {
+        "Loại rác": LABELS_VI[k],
+        "Nhóm": GROUP_INFO[WASTE_INFO[k]["group"]]["name"],
+        "Có thể tái chế": "✅ Có" if WASTE_INFO[k]["recyclable"] else "❌ Khó / Không",
+    }
+    for k in class_names
+])
+st.dataframe(df, use_container_width=True, hide_index=True)
+
+render_sources_note()
 render_footer()
