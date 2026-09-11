@@ -2,7 +2,7 @@
 
 Ứng dụng phân loại rác thải tự động bằng Deep Learning (Transfer Learning với MobileNetV2), triển khai qua Streamlit.
 
-**🔗 Demo trực tiếp:** [waste-classification-app.streamlit.app](https://waste-classification-app.streamlit.app) *(cập nhật lại link thật của bạn)*
+**🔗 Demo trực tiếp:** [waste-classification-app.streamlit.app](https://waste-classification-app-3mte5ygc3mwbzkpazxyulo.streamlit.app/) *(cập nhật lại link thật của bạn)*
 
 ## Giới thiệu
 
