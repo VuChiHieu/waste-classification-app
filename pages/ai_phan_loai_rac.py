@@ -11,7 +11,7 @@ st.write(
     "và nên bỏ vào nhóm rác nào cho phù hợp."
 )
 
-with st.expander("ℹ Về hệ thống này"):
+with st.expander("Thông tin về hệ thống này"):
     st.markdown(f"**Kiến trúc model:** {MODEL_INFO['architecture']}")
     st.markdown(f"**Độ chính xác:** {MODEL_INFO['accuracy']}")
     st.markdown(f"**Số loại rác nhận diện được:** {MODEL_INFO['classes']}")

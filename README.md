@@ -2,8 +2,7 @@
 
 Ứng dụng phân loại rác thải tự động bằng Deep Learning (Transfer Learning với MobileNetV2), triển khai qua Streamlit.
 
-**🔗 Demo trực tiếp:** [waste-classification-app.streamlit.app](https://waste-classification-app-3mte5ygc3mwbzkpazxyulo.streamlit.app/) *(cập nhật lại link thật của bạn)*
-
+**🔗 Demo trực tiếp:** [waste-classification-app.streamlit.app](https://waste-classification-app-3mte5ygc3mwbzkpazxyulo.streamlit.app/)
 ## Giới thiệu
 
 Dự án xây dựng hệ thống nhận diện và phân loại rác thải qua ảnh chụp, hỗ trợ 6 loại rác phổ biến, kèm thông tin hướng dẫn xử lý/tái chế cho từng loại:
