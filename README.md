@@ -31,7 +31,7 @@ Model cuối cùng (MobileNetV2, fine-tuned trên dataset gộp từ TrashNet + 
 | F1-score thấp nhất (plastic) | 0.84 |
 | F1-score cao nhất (cardboard) | 0.94 |
 
-Xem chi tiết toàn bộ quá trình thực nghiệm (baseline → fine-tune → gộp dữ liệu → fine-tune lại) trong [`docs/pipeline.md`](docs/pipeline.md), hoặc notebook gốc trong [`notebooks/`](notebooks/).
+Xem chi tiết toàn bộ quá trình thực nghiệm (baseline → fine-tune → gộp dữ liệu → fine-tune lại) trong [`docs/pipeline.md`](doc/pipeline.md), hoặc notebook gốc trong [`notebooks/`](notebooks/).
 
 ## Cấu trúc project
 
